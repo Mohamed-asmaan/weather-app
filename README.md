@@ -1,79 +1,130 @@
 # Weather App
 
-A React + Vite app that shows current weather for a searchable city using the [OpenWeatherMap](https://openweathermap.org/) API. The UI uses Tailwind CSS v4 and Framer Motion.
+A React + Vite single-page app that shows current weather for a searchable city, using the [OpenWeatherMap](https://openweathermap.org/) API. The UI uses **Tailwind CSS v4** (via the Vite plugin) and **Framer Motion**.
 
-## Live site
+## Links
 
-**Vercel:** [https://weather-app-vgrf-gw4pls2ma-mohamed-asmaans-projects.vercel.app/](https://weather-app-vgrf-gw4pls2ma-mohamed-asmaans-projects.vercel.app/)
+| | |
+| --- | --- |
+| **Repository** | [github.com/Mohamed-asmaan/weather-app](https://github.com/Mohamed-asmaan/weather-app) |
+| **Live (Vercel)** | [https://weather-app-vgrf-gw4pls2ma-mohamed-asmaans-projects.vercel.app/](https://weather-app-vgrf-gw4pls2ma-mohamed-asmaans-projects.vercel.app/) |
 
-## Repository
+The production site is deployed on Vercel from this repository.
 
-[https://github.com/Mohamed-asmaan/weather-app](https://github.com/Mohamed-asmaan/weather-app)
+---
 
-## What this project demonstrates
+## What you can learn from this project
 
-- React 19 with functional components and **Context** (`AppProvider`) for shared location and API URLs
-- **Axios** requests: geocoding and current weather fetched in parallel
-- **Vite** for dev server, HMR, and production builds
-- **Tailwind CSS** for layout and styling, with a responsive card layout
+- **Vite** — fast dev server, ES modules, and an optimized production build.
+- **React 19** — components, hooks, and **Context** (`AppProvider`) for shared search location and API URLs.
+- **Axios** — parallel requests for geocoding and current weather.
+- **Tailwind CSS v4** — `@tailwindcss/vite` in `vite.config.js` (no separate PostCSS config required for the default setup).
+- **Framer Motion** — motion on the main weather panel.
+
+---
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) 18 or newer (LTS is fine)
-- npm (bundled with Node)
+- **Node.js** 18+ (LTS recommended)
+- **npm** (comes with Node)
 
-## Run locally
+Check versions:
 
-1. **Clone the repository**
+```bash
+node -v
+npm -v
+```
 
-   ```bash
-   git clone https://github.com/Mohamed-asmaan/weather-app.git
-   cd weather-app
-   ```
+---
 
-2. **Install dependencies**
+## Get the code
 
-   ```bash
-   npm install
-   ```
+```bash
+git clone https://github.com/Mohamed-asmaan/weather-app.git
+cd weather-app
+```
 
-3. **Start the development server**
+---
 
-   ```bash
-   npm run dev
-   ```
+## Install dependencies
 
-   Open the URL printed in the terminal (usually `http://localhost:5173`).
+```bash
+npm install
+```
 
-## Scripts
+---
 
-| Command           | Description                          |
-| ----------------- | ------------------------------------ |
-| `npm run dev`     | Dev server with hot reload           |
-| `npm run build`   | Production build output in `dist/`   |
-| `npm run preview` | Serve the production build locally   |
-| `npm run lint`    | Run ESLint on the project            |
+## Run in development
+
+```bash
+npm run dev
+```
+
+Vite serves the app (default [http://localhost:5173](http://localhost:5173)) with hot reload when files change.
+
+---
+
+## Other scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run build` | Production build → output in `dist/` |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint |
+
+---
+
+## Production build
+
+```bash
+npm run build
+```
+
+Outputs a static site in **`dist/`** (what you deploy to Vercel, Netlify, etc.). Test it locally with:
+
+```bash
+npm run preview
+```
+
+---
 
 ## OpenWeatherMap API key
 
-Weather data needs a valid OpenWeatherMap API key.
+The app reads a key from `src/context/AppProvider.jsx` as `OPEN_WEATHER_KEY`.
 
-1. Sign up at [openweathermap.org/api](https://openweathermap.org/api) and create a key (activation can take a short time).
-2. For local development, set your key in `src/context/AppProvider.jsx` as the `OPEN_WEATHER_KEY` constant.
+1. Create a free account at [openweathermap.org/api](https://openweathermap.org/api) and generate a key (activation may take a short time).
+2. Replace the value in `AppProvider.jsx` for local development.
 
-**Important:** Do not commit private API keys to a public repository. For real deployments, store the key in environment variables (for example `VITE_OPEN_WEATHER_KEY` in a `.env` file that is listed in `.gitignore`) and read it with `import.meta.env.VITE_OPEN_WEATHER_KEY`. Rotate any key that was accidentally exposed.
+**Security:** Avoid committing real keys to a public repo. Prefer a Vite env variable (e.g. `VITE_OPEN_WEATHER_KEY` in `.env`, listed in `.gitignore`) and `import.meta.env.VITE_OPEN_WEATHER_KEY`, and set the same variable in your Vercel project settings. Rotate any key that was exposed.
 
-## Deploy (e.g. Vercel)
+---
 
-1. Push this repo to GitHub.
-2. Import the project in [Vercel](https://vercel.com/) and connect the repository.
-3. Use the default Vite settings: build command `npm run build`, output directory `dist`.
-4. Add your OpenWeatherMap key in the project **Environment Variables** if you switch the code to use `import.meta.env`.
+## Project layout
 
-## Tech stack
+| Path | Role |
+| --- | --- |
+| `index.html` | HTML shell and root `<div id="root">` |
+| `src/main.jsx` | React entry |
+| `src/App.jsx` | Layout: `AppProvider`, header, `WeatherReport` |
+| `src/components/Header/` | Logo, nav, city search |
+| `src/context/AppProvider.jsx` | Context: location state, API URLs, OpenWeather key |
+| `src/WeatherApi/WeatherReport.jsx` | Fetches geo + weather, renders dashboard |
+| `src/utils/weatherUrls.js` | Helpers to build OpenWeather API URLs |
+| `src/index.css` | Global styles and Tailwind import |
+| `vite.config.js` | React + Tailwind Vite plugins |
 
-- React 19, Vite 8  
-- Tailwind CSS 4, Framer Motion  
-- Axios  
+---
 
-Weather icons are loaded from OpenWeatherMap’s CDN as used in `WeatherReport.jsx`.
+## Deploy on Vercel
+
+1. Push this repository to GitHub.
+2. In [Vercel](https://vercel.com/), import the repo.
+3. Defaults: **Build command** `npm run build`, **Output directory** `dist`.
+4. Add environment variables in Vercel if you move the API key to `import.meta.env`.
+
+---
+
+## Teaching notes
+
+- Use **`npm run dev`** while learning; use **`npm run build`** + **`npm run preview`** before you treat the app as “production ready.”
+- Trace data flow from **search** → **Context URL updates** → **`WeatherReport`** `useEffect` + Axios → UI.
